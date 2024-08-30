@@ -54,3 +54,11 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# tf ignores
+.terraform
+terraform.tfstate
+terraform.tfstate.*
+
+# TMP FILES
+private_key.pem
