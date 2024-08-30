@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
+    ports:
+      - 3000:3000
+    networks:
+      - localnet
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev
+
+  mongodb:
+    image: mongo:5.0
+    environment:
+      - MONGODB_DATABASE="nest-api-tf"
+    restart: on-failure
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    driver: bridge
+
+volumes:
+  mongodb_data_container:
